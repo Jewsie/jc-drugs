@@ -20,7 +20,7 @@ Features;
 
 
 ================= Config File =================
-``Config = Config or {}
+```Config = Config or {}
 
 Config.Weedbag = 'empty_weed_bag' -- The item used to put drugs in
 
@@ -224,4 +224,4 @@ Config.CokeProcessIngredients = { -- Ingredients used for coke processing
     Config.MethCooking = vector3(1003.84, -3202.54, -38.99) -- Where you coook the meth!
     Config.MethPicking = vector3(1012.02, -3194.96, -38.99) -- Where you crack the meth!
 
-------------------------------------------------------------------------------------------------------------------------------------------------``
+------------------------------------------------------------------------------------------------------------------------------------------------```

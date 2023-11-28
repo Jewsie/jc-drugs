@@ -1,0 +1,248 @@
+local QBCore = exports['qb-core']:GetCoreObject()
+
+for _, s in pairs(Config.Seeds) do
+    QBCore.Functions.CreateUseableItem(s.item, function(source, item)
+        TriggerClientEvent('jp-drugs:client:plantweed', source, s.item, s.name, s.reward, s.time, s.stageInterval, s.lowQualityReward, s.midQualityReward, s.highQualityReward)
+    end)
+end
+
+RegisterServerEvent('jp-drugs:server:removeSeed')
+AddEventHandler('jp-drugs:server:removeSeed', function(seed)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    Player.Functions.RemoveItem(seed, 1)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[seed], 'remove')
+end)
+
+RegisterServerEvent('jp-drugs:server:removeitem')
+AddEventHandler('jp-drugs:server:removeitem', function(item)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    Player.Functions.RemoveItem(item, 1)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], 'remove')
+end)
+
+RegisterServerEvent('jp-drugs:server:giveWeed')
+AddEventHandler('jp-drugs:server:giveWeed', function(reward, amount)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local baggy = Player.Functions.GetItemByName(Config.Weedbag)
+
+    if baggy and baggy.amount >= amount then
+        Player.Functions.AddItem(reward, amount)
+        Player.Functions.RemoveItem(baggy, amount)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[reward], 'add')
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[baggy], 'remove')
+    else
+        QBCore.Functions.Notify(src, 'You don\'t have enough bags!', 'error', 3000)
+    end
+end)
+
+RegisterServerEvent('jp-drugs:server:giveCokeLeafs')
+AddEventHandler('jp-drugs:server:giveCokeLeafs', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    Player.Functions.AddItem(Config.LeafItem, Config.LeafAmount)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.LeafItem], 'add')
+end)
+
+RegisterServerEvent('jp-drugs:server:givecoke')
+AddEventHandler('jp-drugs:server:givecoke', function(ingredients)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    for _, i in pairs(ingredients) do
+        Player.Functions.RemoveItem(i.item, i.amount)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[i.item], 'remove')
+    end
+
+    Player.Functions.AddItem(Config.CokeItem, Config.CokeAmount)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.CokeItem], 'add')
+
+    Player.Functions.RemoveItem(Config.Weedbag, Config.CokeAmount)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.Weedbag], 'remove')
+end)
+
+RegisterServerEvent('jp-drugs:server:removecokeitems')
+AddEventHandler('jp-drugs:server:removecokeitems', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    
+    for _, i in pairs(ingredients) do
+        Player.Functions.RemoveItem(i.item, i.amount)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[i.item], 'remove')
+    end
+end)
+
+RegisterServerEvent('jp-drugs:server:givebrick')
+AddEventHandler('jp-drugs:server:givebrick', function(item, reward, amount)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    Player.Functions.RemoveItem(item, amount)
+    Player.Functions.AddItem(reward, 1)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[reward], 'add')
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], 'remove')
+end)
+
+RegisterServerEvent('jp-drugs:server:removedrugs')
+AddEventHandler('jp-drugs:server:removedrugs', function(item, amount)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    Player.Functions.RemoveItem(item, amount)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], 'remove')
+end)
+
+RegisterServerEvent('jp-drugs:server:giveacid')
+AddEventHandler('jp-drugs:server:giveacid', function(amount)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local jerrycan = Player.Functions.GetItemByName('empty_jerry_can')
+
+    if jerrycan and jerrycan.amount >= amount then
+        Player.Functions.AddItem(Config.AcidItem, amount)
+        Player.Functions.RemoveItem(Config.ExtractItem, amount)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.AcidItem], 'add')
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.ExtractItem], 'remove')
+    else
+        QBCore.Functions.Notify('You need atleast ' .. amount .. ' Empty jerry cans!', 'error', 3000)
+    end
+end)
+
+RegisterServerEvent('jp-drugs:server:givemethylamine')
+AddEventHandler('jp-drugs:server:givemethylamine', function(amount)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local jerrycan = Player.Functions.GetItemByName('empty_jerry_can')
+
+    if jerrycan and jerrycan.amount >= amount then
+        Player.Functions.AddItem(Config.MethylamineItem, amount)
+        Player.Functions.RemoveItem(Config.ExtractItem, amount)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.MethylamineItem], 'add')
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.ExtractItem], 'remove')
+    else
+        QBCore.Functions.Notify('You need atleast ' .. amount .. ' Empty jerry cans!', 'error', 3000)
+    end
+end)
+
+RegisterServerEvent('jp-drugs:server:givegasoline')
+AddEventHandler('jp-drugs:server:givegasoline', function(amount)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local jerrycan = Player.Functions.GetItemByName('empty_jerry_can')
+
+    if jerrycan and jerrycan.amount >= amount then
+        Player.Functions.AddItem(Config.GasolineItem, amount)
+        Player.Functions.RemoveItem(Config.GasolineExtractItem, amount)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.GasolineItem], 'add')
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.GasolineExtractItem], 'remove')
+    else
+        QBCore.Functions.Notify('You need atleast ' .. amount .. ' Empty jerry cans!', 'error', 3000)
+    end
+end)
+
+RegisterServerEvent('jp-drugs:server:givecement')
+AddEventHandler('jp-drugs:server:givecement', function(amount)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    Player.Functions.AddItem(Config.CementItem, amount)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.CementItem], 'add')
+end)
+
+RegisterServerEvent('jp-drugs:server:givelithium')
+AddEventHandler('jp-drugs:server:givelithium', function(amount)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    Player.Functions.AddItem('lithium', amount)
+    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['lithium'], 'add')
+end)
+
+RegisterServerEvent('gs-drugs:server:methprocession')
+AddEventHandler('gs-drugs:server:methprocession', function(action)
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+
+    if action == "processed" then
+        local hasIngredients = false
+
+        for _, i in pairs(Config.Ingredients) do
+            local hasItem = Player.Functions.GetItemByName(i.item)
+    
+            if not hasItem or hasItem.amount < i.amount then
+                hasIngredients = false
+                break
+            else
+                hasIngredients = true
+                Player.Functions.RemoveItem(i.item, i.amount)
+                TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[i.item], 'remove')
+            end
+        end
+    
+        if hasIngredients then
+            Player.Functions.AddItem(Config.ProcessedMethItem, Config.ProcessedCokeAmount)
+            TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.ProcessedMethItem], 'add')
+        else
+            QBCore.Functions.Notify(src, 'You are missing some ingredients!')
+        end
+    elseif action == "cook" then
+        local hasItem = Player.Functions.GetItemByName(Config.ProcessedMethItem)
+
+        Player.Functions.RemoveItem(Config.ProcessedMethItem, 1)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.ProcessedMethItem], 'remove')
+
+        Player.Functions.AddItem(Config.MethTrayItem, 1)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.MethTrayItem], 'add')
+    elseif action == "cracking" then
+        local hasItem = Player.Functions.GetItemByName(Config.ProcessedMethItem)
+
+        Player.Functions.RemoveItem(Config.MethTrayItem, 1)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.MethTrayItem], 'remove')
+
+        Player.Functions.AddItem(Config.MethItem, Config.MethAmount)
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.MethItem], 'add')
+    elseif acton == "failedprocession" then
+        local hasIngredients = false
+
+        for _, i in pairs(Config.Ingredients) do
+            local hasItem = Player.Functions.GetItemByName(i.item)
+    
+            if not hasItem or hasItem.amount < i.amount then
+                hasIngredients = false
+                QBCore.Functions.Notify(src, 'You don\'t have enough ingredients!', 'error', 3000)
+                break
+            else
+                hasIngredients = true
+                Player.Functions.RemoveItem(i.item, i.amount)
+                TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[i.item], 'remove')
+            end
+        end
+    elseif acton == "failedcooking" then
+        local hasItem = Player.Functions.GetItemByName(Config.ProcessedMethItem)
+    
+        if not hasItem or hasItem.amount < 1 then
+            hasIngredients = false
+            QBCore.Functions.Notify(src, 'You don\'t have enough ingredients!', 'error', 3000)
+        else
+            hasIngredients = true
+            Player.Functions.RemoveItem(Config.ProcessedMethItem, 1)
+            TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.ProcessedMethItem], 'remove')
+        end
+    elseif acton == "failedcracking" then
+        local hasItem = Player.Functions.GetItemByName(Config.MethTrayItem)
+    
+        if not hasItem or hasItem.amount < 1 then
+            hasIngredients = false
+            QBCore.Functions.Notify(src, 'You don\'t have enough ingredients!', 'error', 3000)
+        else
+            hasIngredients = true
+            Player.Functions.RemoveItem(Config.MethTrayItem, 1)
+            TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.MethTrayItem], 'remove')
+        end
+    end
+end)

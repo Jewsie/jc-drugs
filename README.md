@@ -1,4 +1,5 @@
 # gs-drugs
+ Video: https://www.youtube.com/watch?v=zseVvzRYNrs&ab_channel=Jackyfied
  
 Features;
 ================= WEED =================

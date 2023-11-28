@@ -1,4 +1,5 @@
 # gs-drugs
+ Discord for support: https://discord.gg/D28KxFJV
  Video: https://www.youtube.com/watch?v=zseVvzRYNrs&ab_channel=Jackyfied
  
 Features;

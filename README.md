@@ -26,6 +26,11 @@ Features;
 
 Config.Weedbag = 'empty_weed_bag' -- The item used to put drugs in
 
+
+Dependencies;
+k-ui - https://github.com/KamuiKody/k-ui
+qb-core - https://github.com/qbcore-framework/qb-core
+
 ---------------------------------------------------------[[WEED CONFIGURATION]]-----------------------------------------------------------------
 Config.Leafblower = 'leaf_blower' -- Leaf Blower Item
 Config.Fertilizer = 'weed_nutrition' -- Item for feeding the plants

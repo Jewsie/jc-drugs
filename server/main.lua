@@ -2,12 +2,12 @@ local QBCore = exports['qb-core']:GetCoreObject()
 
 for _, s in pairs(Config.Seeds) do
     QBCore.Functions.CreateUseableItem(s.item, function(source, item)
-        TriggerClientEvent('jp-drugs:client:plantweed', source, s.item, s.name, s.reward, s.time, s.stageInterval, s.lowQualityReward, s.midQualityReward, s.highQualityReward)
+        TriggerClientEvent('jc-drugs:client:plantweed', source, s.item, s.name, s.reward, s.time, s.stageInterval, s.lowQualityReward, s.midQualityReward, s.highQualityReward)
     end)
 end
 
-RegisterServerEvent('jp-drugs:server:removeSeed')
-AddEventHandler('jp-drugs:server:removeSeed', function(seed)
+RegisterServerEvent('jc-drugs:server:removeSeed')
+AddEventHandler('jc-drugs:server:removeSeed', function(seed)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
@@ -15,8 +15,8 @@ AddEventHandler('jp-drugs:server:removeSeed', function(seed)
     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[seed], 'remove')
 end)
 
-RegisterServerEvent('jp-drugs:server:removeitem')
-AddEventHandler('jp-drugs:server:removeitem', function(item)
+RegisterServerEvent('jc-drugs:server:removeitem')
+AddEventHandler('jc-drugs:server:removeitem', function(item)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
@@ -24,8 +24,8 @@ AddEventHandler('jp-drugs:server:removeitem', function(item)
     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], 'remove')
 end)
 
-RegisterServerEvent('jp-drugs:server:giveWeed')
-AddEventHandler('jp-drugs:server:giveWeed', function(reward, amount)
+RegisterServerEvent('jc-drugs:server:giveWeed')
+AddEventHandler('jc-drugs:server:giveWeed', function(reward, amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local baggy = Player.Functions.GetItemByName(Config.Weedbag)
@@ -40,8 +40,8 @@ AddEventHandler('jp-drugs:server:giveWeed', function(reward, amount)
     end
 end)
 
-RegisterServerEvent('jp-drugs:server:giveCokeLeafs')
-AddEventHandler('jp-drugs:server:giveCokeLeafs', function()
+RegisterServerEvent('jc-drugs:server:giveCokeLeafs')
+AddEventHandler('jc-drugs:server:giveCokeLeafs', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
@@ -49,8 +49,8 @@ AddEventHandler('jp-drugs:server:giveCokeLeafs', function()
     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.LeafItem], 'add')
 end)
 
-RegisterServerEvent('jp-drugs:server:givecoke')
-AddEventHandler('jp-drugs:server:givecoke', function(ingredients)
+RegisterServerEvent('jc-drugs:server:givecoke')
+AddEventHandler('jc-drugs:server:givecoke', function(ingredients)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
@@ -66,8 +66,8 @@ AddEventHandler('jp-drugs:server:givecoke', function(ingredients)
     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.Weedbag], 'remove')
 end)
 
-RegisterServerEvent('jp-drugs:server:removecokeitems')
-AddEventHandler('jp-drugs:server:removecokeitems', function()
+RegisterServerEvent('jc-drugs:server:removecokeitems')
+AddEventHandler('jc-drugs:server:removecokeitems', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     
@@ -77,8 +77,8 @@ AddEventHandler('jp-drugs:server:removecokeitems', function()
     end
 end)
 
-RegisterServerEvent('jp-drugs:server:givebrick')
-AddEventHandler('jp-drugs:server:givebrick', function(item, reward, amount)
+RegisterServerEvent('jc-drugs:server:givebrick')
+AddEventHandler('jc-drugs:server:givebrick', function(item, reward, amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
@@ -88,8 +88,8 @@ AddEventHandler('jp-drugs:server:givebrick', function(item, reward, amount)
     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], 'remove')
 end)
 
-RegisterServerEvent('jp-drugs:server:removedrugs')
-AddEventHandler('jp-drugs:server:removedrugs', function(item, amount)
+RegisterServerEvent('jc-drugs:server:removedrugs')
+AddEventHandler('jc-drugs:server:removedrugs', function(item, amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
@@ -97,8 +97,8 @@ AddEventHandler('jp-drugs:server:removedrugs', function(item, amount)
     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item], 'remove')
 end)
 
-RegisterServerEvent('jp-drugs:server:giveacid')
-AddEventHandler('jp-drugs:server:giveacid', function(amount)
+RegisterServerEvent('jc-drugs:server:giveacid')
+AddEventHandler('jc-drugs:server:giveacid', function(amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local jerrycan = Player.Functions.GetItemByName('empty_jerry_can')
@@ -113,8 +113,8 @@ AddEventHandler('jp-drugs:server:giveacid', function(amount)
     end
 end)
 
-RegisterServerEvent('jp-drugs:server:givemethylamine')
-AddEventHandler('jp-drugs:server:givemethylamine', function(amount)
+RegisterServerEvent('jc-drugs:server:givemethylamine')
+AddEventHandler('jc-drugs:server:givemethylamine', function(amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local jerrycan = Player.Functions.GetItemByName('empty_jerry_can')
@@ -129,8 +129,8 @@ AddEventHandler('jp-drugs:server:givemethylamine', function(amount)
     end
 end)
 
-RegisterServerEvent('jp-drugs:server:givegasoline')
-AddEventHandler('jp-drugs:server:givegasoline', function(amount)
+RegisterServerEvent('jc-drugs:server:givegasoline')
+AddEventHandler('jc-drugs:server:givegasoline', function(amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local jerrycan = Player.Functions.GetItemByName('empty_jerry_can')
@@ -145,8 +145,8 @@ AddEventHandler('jp-drugs:server:givegasoline', function(amount)
     end
 end)
 
-RegisterServerEvent('jp-drugs:server:givecement')
-AddEventHandler('jp-drugs:server:givecement', function(amount)
+RegisterServerEvent('jc-drugs:server:givecement')
+AddEventHandler('jc-drugs:server:givecement', function(amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
@@ -154,8 +154,8 @@ AddEventHandler('jp-drugs:server:givecement', function(amount)
     TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.CementItem], 'add')
 end)
 
-RegisterServerEvent('jp-drugs:server:givelithium')
-AddEventHandler('jp-drugs:server:givelithium', function(amount)
+RegisterServerEvent('jc-drugs:server:givelithium')
+AddEventHandler('jc-drugs:server:givelithium', function(amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
     local chance = math.random(1, 100)

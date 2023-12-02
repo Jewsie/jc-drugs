@@ -82,8 +82,8 @@ function DecreaseHealthAndThirst(plant)
     end)
 end
 
-RegisterNetEvent('jp-drugs:client:plantweed')
-AddEventHandler('jp-drugs:client:plantweed', function(item, name, reward, time, stageInterval, lowQualityReward, midQualityReward, highQualityReward)
+RegisterNetEvent('jc-drugs:client:plantweed')
+AddEventHandler('jc-drugs:client:plantweed', function(item, name, reward, time, stageInterval, lowQualityReward, midQualityReward, highQualityReward)
     local model = 'bkr_prop_weed_med_01b'
     local playerPos = GetEntityCoords(PlayerPedId())
     local stageUpgrade = stageInterval
@@ -98,7 +98,7 @@ AddEventHandler('jp-drugs:client:plantweed', function(item, name, reward, time, 
     local timeWeed = GetGameTimer() + (time2 * 1000)
 
     TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 5000, false)
-    TriggerServerEvent('jp-drugs:server:removeSeed', item)
+    TriggerServerEvent('jc-drugs:server:removeSeed', item)
 
     Wait(5000)
     local weedPlant = CreateObject(model, playerPos.x, playerPos.y, playerPos.z, true, false, false)
@@ -130,7 +130,7 @@ AddEventHandler('jp-drugs:client:plantweed', function(item, name, reward, time, 
                     if QBCore.Functions.HasItem(Config.Water) then
                         plantData2.thirst = plantData2.thirst + 25
                         TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 5000, false)
-                        TriggerServerEvent('jp-drugs:server:removeitem', Config.Water)
+                        TriggerServerEvent('jc-drugs:server:removeitem', Config.Water)
                         
                         Wait(5500)
                         ClearPedTasksImmediately(PlayerPedId())
@@ -147,7 +147,7 @@ AddEventHandler('jp-drugs:client:plantweed', function(item, name, reward, time, 
                     if QBCore.Functions.HasItem(Config.Fertilizer) then
                         plantData2.health = plantData2.health + 25
                         TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 5000, false)
-                        TriggerServerEvent('jp-drugs:server:removeitem', Config.Fertilizer)
+                        TriggerServerEvent('jc-drugs:server:removeitem', Config.Fertilizer)
 
                         Wait(5500)
                         ClearPedTasksImmediately(PlayerPedId())
@@ -183,17 +183,17 @@ AddEventHandler('jp-drugs:client:plantweed', function(item, name, reward, time, 
                         elseif plantData2.stage == 1 then
                             TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 5000, false)
                             Wait(5500)
-                            TriggerServerEvent('jp-drugs:server:giveWeed', reward, lowQualityReward)
+                            TriggerServerEvent('jc-drugs:server:giveWeed', reward, lowQualityReward)
                             DeleteObject(weedPlant)
                             ClearPedTasksImmediately(PlayerPedId())
                         elseif plantData2.stage == 2 then
                             TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 5000, false)
                             Wait(5500)
                             if plantData2.quality <= 15 then
-                                TriggerServerEvent('jp-drugs:server:giveWeed', reward, lowQualityReward)
+                                TriggerServerEvent('jc-drugs:server:giveWeed', reward, lowQualityReward)
                                 DeleteObject(weedPlant)
                             elseif plantData2.quality >= 50 then
-                                TriggerServerEvent('jp-drugs:server:giveWeed', reward, midQualityReward)
+                                TriggerServerEvent('jc-drugs:server:giveWeed', reward, midQualityReward)
                                 DeleteObject(weedPlant)
                             end
                             ClearPedTasksImmediately(PlayerPedId())
@@ -201,13 +201,13 @@ AddEventHandler('jp-drugs:client:plantweed', function(item, name, reward, time, 
                             TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 5000, false)
                             Wait(5500)
                             if plantData2.quality <= 15 then
-                                TriggerServerEvent('jp-drugs:server:giveWeed', reward, lowQualityReward)
+                                TriggerServerEvent('jc-drugs:server:giveWeed', reward, lowQualityReward)
                                 DeleteObject(weedPlant)
                             elseif plantData2.quality >= 50 and plantData2.quality <= 84 then
-                                TriggerServerEvent('jp-drugs:server:giveWeed', reward, midQualityReward)
+                                TriggerServerEvent('jc-drugs:server:giveWeed', reward, midQualityReward)
                                 DeleteObject(weedPlant)
                             elseif plantData2.quality >= 85 then
-                                TriggerServerEvent('jp-drugs:server:giveWeed', reward, highQualityReward)
+                                TriggerServerEvent('jc-drugs:server:giveWeed', reward, highQualityReward)
                                 DeleteObject(weedPlant)
                             end
                             ClearPedTasksImmediately(PlayerPedId())

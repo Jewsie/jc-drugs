@@ -1,27 +1,27 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
-local extractedGasoline = {}
-local extractedCement = {}
-local searchBenzocaine = {}
-
+local extractedAcid = {}
+local extractedMethylamine = {}
+local searchedBox = {}
+local pickedLithium = {}
 local hasSearched = false
 
-RegisterNetEvent('jc-drugs:client:extractGasoline')
-AddEventHandler('jc-drugs:client:extractGasoline', function(data)
-    local gasolineKey = tostring(data.entity)
+RegisterNetEvent('jc-drugs:client:extractAcid')
+AddEventHandler('jc-drugs:client:extractAcid', function(data)
+    local acidKey = tostring(data.entity)
     local playerPed = PlayerPedId()
-    local amount = Config.GasolineAmount
+    local amount = Config.AcidAmount
 
-    if not extractedGasoline[gasolineKey] then
-        extractedGasoline[gasolineKey] = { hasSearched = false }
+    if not extractedAcid[acidKey] then
+        extractedAcid[acidKey] = { hasSearched = false }
     end
 
-    if QBCore.Functions.HasItem(Config.GasolineExtractItem, Config.GasolineMinExtactAmount) then
-        if extractedGasoline[gasolineKey].hasSearched then
-            QBCore.Functions.Notify('You have already extracted Gasoline from this!')
+    if QBCore.Functions.HasItem(Config.ExtractItem, Config.MinExtractItems) then
+        if extractedAcid[acidKey].hasSearched then
+            QBCore.Functions.Notify('You have already extracted Acid from this!')
         else
             TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 10000, false)
-            QBCore.Functions.Progressbar('extracting_gasoline', 'Extracting Gasoline...', 10000, false, true, {
+            QBCore.Functions.Progressbar('extracting_acid', 'Extracting Hydrochloric Acid...', 10000, false, true, {
                 disableMovement = true,
                 disableCarMovement = true,
                 disableMouse = false,
@@ -30,316 +30,299 @@ AddEventHandler('jc-drugs:client:extractGasoline', function(data)
                     local chance = math.random(1, 100)
 
                     if chance <= 30 then
-                        QBCore.Functions.Notify('You spilled too much gasoline!', 'error', 3000)
-                        extractedGasoline[gasolineKey].hasSearched = true
+                        QBCore.Functions.Notify('You spilled too much acid!', 'error', 3000)
+                        extractedAcid[acidKey].hasSearched = true
                     elseif chance > 30 then
-                        TriggerServerEvent('jp-drugs:server:givegasoline', amount)
+                        TriggerServerEvent('jp-drugs:server:giveacid', amount)
                         ClearPedTasksImmediately(PlayerPedId())
-                        extractedGasoline[gasolineKey].hasSearched = true
+                        extractedAcid[acidKey].hasSearched = true
 
                         Wait(1800 * 1000)
-                        extractedGasoline[gasolineKey].hasSearched = false
+                        extractedAcid[acidKey].hasSearched = false
                     end
                 end, function()
-                    QBCore.Functions.Notify('You cancelled extracting Gasoline!')
+                    QBCore.Functions.Notify('You cancelled extracting Hydrochloric Acid!')
                     ClearPedTasksImmediately(PlayerPedId())
             end)
         end
     else
-        QBCore.Functions.Notify('You need atleast ' .. Config.GasolineMinExtactAmount .. ' jerry cans!')
+        QBCore.Functions.Notify('You need atleast ' .. Config.MinExtractItems .. ' jerry cans!')
     end
 end)
 
-RegisterNetEvent('jc-drugs:client:searchBenzocaine')
-AddEventHandler('jc-drugs:client:searchBenzocaine', function(data)
-    local benzocaineKey = tostring(data.entity)
+RegisterNetEvent('jc-drugs:client:extractMethylamine')
+AddEventHandler('jc-drugs:client:extractMethylamine', function(data)
+    local acidKey = tostring(data.entity)
     local playerPed = PlayerPedId()
-    local amount = Config.GasolineAmount
+    local amount = Config.MethylamineAmount
 
-    if not searchBenzocaine[benzocaineKey] then
-        searchBenzocaine[benzocaineKey] = { hasSearched = false }
+    if not extractedMethylamine[acidKey] then
+        extractedMethylamine[acidKey] = { hasSearched = false }
     end
 
-    if searchBenzocaine[benzocaineKey].hasSearched then
+    if QBCore.Functions.HasItem(Config.ExtractItem, Config.MinExtractItems) then
+        if extractedMethylamine[acidKey].hasSearched then
+            QBCore.Functions.Notify('You have already extracted Acid from this!')
+        else
+            TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 10000, false)
+            QBCore.Functions.Progressbar('extracting_methylamine', 'Extracting Methylamine...', 10000, false, true, {
+                disableMovement = true,
+                disableCarMovement = true,
+                disableMouse = false,
+                disableCombat = true
+                }, {}, {}, {}, function()
+                    local chance = math.random(1, 100)
+
+                    if chance <= 30 then
+                        QBCore.Functions.Notify('You spilled too much methylamine!', 'error', 3000)
+                        extractedMethylamine[acidKey].hasSearched = true
+                    elseif chance > 30 then
+                        TriggerServerEvent('jp-drugs:server:givemethylamine', amount)
+                        ClearPedTasksImmediately(PlayerPedId())
+                        extractedMethylamine[acidKey].hasSearched = true
+
+                        Wait(1800 * 1000)
+                        extractedMethylamine[acidKey].hasSearched = false
+                    end
+                end, function()
+                    QBCore.Functions.Notify('You cancelled extracting Methylamine!')
+                    ClearPedTasksImmediately(PlayerPedId())
+            end)
+        end
+    else
+        QBCore.Functions.Notify('You need atleast ' .. Config.MinExtraItems2 .. ' jerry cans!')
+    end
+end)
+
+RegisterNetEvent('jc-drugs:client:searchcardboard')
+AddEventHandler('jc-drugs:client:searchcardboard', function(data)
+    local boxKey = tostring(data.entity)
+    local playerPed = PlayerPedId()
+    local amount = Config.MethylamineAmount
+
+    if not searchedBox[boxKey] then
+        searchedBox[boxKey] = { hasSearched = false }
+    end
+
+    if searchedBox[boxKey].hasSearched then
         QBCore.Functions.Notify('You have already searched this box!')
     else
-        TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 15000, false)
-        QBCore.Functions.Progressbar('extracting_gasoline', 'Searching airport boxes...', 15000, false, true, {
+        TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 10000, false)
+
+        QBCore.Functions.Progressbar('cooking_meth', 'Searching Cardboard box...', 10000, false, true, {
             disableMovement = true,
             disableCarMovement = true,
             disableMouse = false,
             disableCombat = true
             }, {}, {}, {}, function()
-                TriggerServerEvent('jp-drugs:server:givegasoline', amount)
-                ClearPedTasksImmediately(PlayerPedId())
-                searchBenzocaine[benzocaineKey].hasSearched = true
+                TriggerServerEvent('jc-drugs:server:givecardboarditem')
+                ClearPedTasks(PlayerPedId())
+                searchedBox[boxKey].hasSearched = true
 
                 Wait(1800 * 1000)
-                searchBenzocaine[benzocaineKey].hasSearched = false
-                end
+                searchedBox[boxKey].hasSearched = false
             end, function()
-                QBCore.Functions.Notify('You cancelled searching the airport box!')
-                ClearPedTasksImmediately(PlayerPedId())
+                QBCore.Functions.Notify('You\'ve cancelled the cooking session!', 'error', 3000)
         end)
     end
 end)
 
-RegisterNetEvent('jc-drugs:client:extractCement')
-AddEventHandler('jc-drugs:client:extractCement', function(data)
-    local cementKey = tostring(data.entity)
-    local playerPed = PlayerPedId()
-    local amount = Config.CementExtractAmount
+Citizen.CreateThread(function()
+    local extracthHydrochloride = 'prop_ind_mech_01c'
+    local extractMethylamine = 'prop_barrel_02b'
 
-    if not extractedCement[cementKey] then
-        extractedCement[cementKey] = { hasSearched = false }
+    exports['qb-target']:AddTargetModel(extracthHydrochloride, {
+        options = {
+            {
+                label = 'Extract Acid',
+                icon = 'fas fa-acid',
+                targeticon = 'fas fa-eye',
+                type = 'client',
+                event = 'jc-drugs:client:extractAcid'
+            }
+        }
+    })
+
+    exports['qb-target']:AddTargetModel(extractMethylamine, {
+        options = {
+            {
+                label = 'Extract Methylamine',
+                icon = 'fas fa-acid',
+                targeticon = 'fas fa-eye',
+                type = 'client',
+                event = 'jc-drugs:client:extractMethylamine'
+            }
+        }
+    })
+
+    local model = 'prop_rock_1_g'
+
+    RequestModel(model)
+    while not HasModelLoaded(model) do
+        RequestModel(model)
+        Wait(1)
     end
 
-    TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 10000, false)
-    QBCore.Functions.Progressbar('extracting_cement', 'Extracting Cement...', 10000, false, true, {
-        disableMovement = true,
-        disableCarMovement = true,
-        disableMouse = false,
-        disableCombat = true
-        }, {}, {}, {}, function()
-            local chance = math.random(1, 100)
+    for _, loc in pairs(Config.LithiumLoc) do
+        local lithiumRock = CreateObject(model, loc.x, loc.y, loc.z - 1.0, true, false, false)
+        PlaceObjectOnGroundProperly(lithiumRock)
+        FreezeEntityPosition(lithiumRock, true)
 
-            if chance <= 30 then
-                QBCore.Functions.Notify('You didn\'t find any cement!', 'error', 3000)
-                extractedCement[cementKey].hasSearched = true
-            elseif chance > 30 then
-                TriggerServerEvent('jp-drugs:server:givecement', amount)
-                ClearPedTasksImmediately(PlayerPedId())
-                extractedCement[cementKey].hasSearched = true
-
-                Wait(1800 * 1000)
-                extractedCement[cementKey].hasSearched = false
-            end
-        end, function()
-            QBCore.Functions.Notify('You cancelled extracting Cement!')
-            ClearPedTasksImmediately(PlayerPedId())
-    end)
-end)
-
-
-Citizen.CreateThread(function()
-    local extractGasoline = 'prop_air_fueltrail2'
-
-    for _, loc in pairs(Config.CokePlantLoc) do
-        local model = Config.CokePlant
-
-        RequestModel(model)
-        while not HasModelLoaded(model) do
-            RequestModel(model)
-            Wait(1)
-        end
-
-        local coke = CreateObject(model, loc.x, loc.y, loc.z - 1.0, true, false, false)
-        FreezeEntityPosition(coke, true)
-        PlaceObjectOnGroundProperly(coke)
-
-        exports['qb-target']:AddTargetEntity(coke, {
+        exports['qb-target']:AddTargetEntity(lithiumRock, {
             options = {
                 {
-                    label = 'Harvest Coca Plant',
-                    icon = 'fas fa-plant',
+                    label = 'Pickup Lithium',
+                    icon = 'fas fa-rock',
                     targeticon = 'fas fa-eye',
                     action = function()
-                        if QBCore.Functions.HasItem('trowel') then
-                            TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 10000, false)
-                            QBCore.Functions.Progressbar('picking_coke', 'Picking Coke...', 10000, false, true, {
+                        local chance = math.random(1, 100)
+                        if QBCore.Functions.HasItem(Config.Trowel) then
+                            TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 5000, false)
+                            QBCore.Functions.Progressbar('picking_lithium', 'Picking up Rock...', 10000, false, true, {
                                 disableMovement = true,
                                 disableCarMovement = true,
                                 disableMouse = false,
                                 disableCombat = true
                                 }, {}, {}, {}, function()
-                                    local cokePos = GetEntityCoords(coke)
-                                    SetEntityVisible(coke, false)
-                                    TriggerServerEvent('jp-drugs:server:giveCokeLeafs')
-                                    ClearPedTasksImmediately(PlayerPedId())
+                                    if chance <= Config.LithiumChance then
+                                        local newPos = GetEntityCoords(lithiumRock)
+                                        TriggerServerEvent('jp-drugs:server:givelithium', math.random(1, Config.LithiumMaxExtract))
+                                        ClearPedTasksImmediately(PlayerPedId())
 
-                                    Wait(60 * 1000)
-                                    SetEntityVisible(coke, true)
+                                        SetEntityVisible(lithiumRock, false)
+
+                                        Wait(60 * 1000)
+                                        SetEntityVisible(lithiumRock, true)
+                                    else
+                                        QBCore.Functions.Notify('You didn\'t find any lithium!', 'error', 3000)
+                                        SetEntityVisible(lithiumRock, false)
+
+                                        Wait(60 * 1000)
+                                        SetEntityVisible(lithiumRock, true)
+                                    end
                                 end, function()
-                                    QBCore.Functions.Notify('You cancelled picking coke!')
+                                    QBCore.Functions.Notify('You cancelled picking up the rock!')
                                     ClearPedTasksImmediately(PlayerPedId())
                             end)
                         else
-                            QBCore.Functions.Notify('You need a trowel to harvest plants!', 'error', 3000)
+                            QBCore.Functions.Notify('You need a trowel to pickup this rock!')
                         end
                     end
                 }
             }
         })
     end
-    
-    exports['qb-target']:AddCircleZone('coke_processing', Config.CokeProcessing, 1.5, {
-        name = 'coke_processing',
-        debugPoly = false,
+end)
+
+Citizen.CreateThread(function()
+    exports['qb-target']:AddCircleZone('meth_procession', Config.MethProcession, 1.5, {
+        name = 'meth_procession',
+        debugPoly = false
     }, {
         options = {
             {
-                label = 'Process Coke',
-                icon = 'fas fa-plant',
+                label = 'Process Meth',
                 targeticon = 'fas fa-eye',
                 action = function()
-                    local hasIngredients = true
-                    local hasIngredients2 = true
-                    
-                    for _, i in pairs(Config.CokeProcessIngredients) do
-                        if not QBCore.Functions.HasItem(i.item, i.amount) then
-                            hasIngredients = false
-                            QBCore.Functions.Notify('You need ' .. i.name .. ' x' .. i.amount)
-                            break
+                    TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 15000, false)
+                    exports['ps-ui']:Circle(function(success)
+                        if success then
+                            TriggerServerEvent('jc-drugs:server:methprocession', 'processed')
+                            ClearPedTasksImmediately(PlayerPedId())
+                        else
+                            QBCore.Functions.Notify('You failed at cooking the meth!', 'error', 3000)
+                            TriggerServerEvent('jc-drugs:server:methprocession', 'failedprocession')
+                            ClearPedTasksImmediately(PlayerPedId())
                         end
-                    end
+                    end, math.random(3, 5), 20)
+                end
+            }
+        },
+        distance = 2.5
+    })
+    
+    exports['qb-target']:AddCircleZone('cook_meth', Config.MethCooking, 1.5, {
+        name = 'cook_meth',
+        debugPoly = false
+    }, {
+        options = {
+            {
+                label = 'Cook Meth',
+                targeticon = 'fas fa-eye',
+                action = function()
+                    TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 15000, false)
+                    exports['ps-ui']:Circle(function(success)
+                        if success then
+                            ClearPedTasksImmediately(PlayerPedId())
 
-                    if not QBCore.Functions.HasItem(Config.Weedbag, Config.CokeAmount) then
-                        hasIngredients2 = false
-                        QBCore.Functions.Notify('You need ' .. Config.CokeAmount .. ' Baggies!')
-                    end
-
-                    if hasIngredients and hasIngredients2 then
-                        exports['ps-ui']:Circle(function(success)
-                            if success then
-                                TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 10000, false)
-                                QBCore.Functions.Progressbar('process_coke', 'Processing Coke...', 15000, false, true, {
+                            if QBCore.Functions.HasItem(Config.ProcessedMethItem) then
+                                QBCore.Functions.Progressbar('cooking_meth', 'Cooking Meth...', Config.MethCookingTime * 1000, false, true, {
                                     disableMovement = true,
                                     disableCarMovement = true,
                                     disableMouse = false,
                                     disableCombat = true
                                     }, {}, {}, {}, function()
-                                        TriggerServerEvent('jp-drugs:server:givecoke', Config.CokeProcessIngredients)
-                                        ClearPedTasksImmediately(PlayerPedId())
+                                        TriggerServerEvent('jc-drugs:server:methprocession', 'cook')
+                                        ClearPedTasks(PlayerPedId())
                                     end, function()
-                                        QBCore.Functions.Notify('You have cancelled the coke processing!')
-                                        ClearPedTasksImmediately(PlayerPedId())
+                                        QBCore.Functions.Notify('You\'ve cancelled the cooking session!', 'error', 3000)
+                                        ClearPedTasks(PlayerPedId())
                                 end)
                             else
-                                TriggerServerEvent('jp-drugs:server:removecokeitems')
+                                QBCore.Functions.Notify('You need processed meth to cook!', 'error', 3000)
                             end
-                        end, math.random(4, 7), 20)
-                    else
-                        QBCore.Functions.Notify('You are missing ingredients!')
-                    end
+                        else
+                            QBCore.Functions.Notify('You failed at cracking the meth!', 'error', 3000)
+                            TriggerServerEvent('jc-drugs:server:methprocession', 'failedcooking')
+                            ClearPedTasksImmediately(PlayerPedId())
+                        end
+                    end, math.random(3, 5), 20)
                 end
             }
-        }
+        },
+        distance = 2.5
     })
 
-    exports['qb-target']:AddCircleZone('coke_packaging', Config.CokePacking, 1.5, {
-        name = 'coke_packaging',
-        debugPoly = false,
+    exports['qb-target']:AddCircleZone('crack_meth', Config.MethPicking, 1.5, {
+        name = 'crack_meth',
+        debugPoly = false
     }, {
         options = {
             {
-                label = 'Package Coke',
-                icon = 'fas fa-package',
+                label = 'Crack Meth',
                 targeticon = 'fas fa-eye',
                 action = function()
-                    lib.registerContext({
-                        id = 'coke_packaging',
-                        title = 'Coke Packaging',
-                        options = {
-                            {
-                                title = 'Coke Package',
-                                description = 'Coke Baggies Required: ' .. Config.SmallPackageAmount,
-                                onSelect = function()
-                                    if QBCore.Functions.HasItem(Config.CokeItem, Config.SmallPackageAmount) then
-                                        exports['ps-ui']:Circle(function(success)
-                                            if success then
-                                                TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 10000, false)
-                                                QBCore.Functions.Progressbar('packaging_package', 'Packaging Coke Package...', 30000, false, true, {
-                                                    disableMovement = true,
-                                                    disableCarMovement = true,
-                                                    disableMouse = false,
-                                                    disableCombat = true
-                                                    }, {}, {}, {}, function()
-                                                        TriggerServerEvent('jp-drugs:server:givebrick', Config.CokeItem, Config.SmallBrick, Config.SmallPackageAmount)
-                                                        ClearPedTasksImmediately(PlayerPedId())
-                                                    end, function()
-                                                        ClearPedTasksImmediately(PlayerPedId())
-                                                        QBCore.Functions.Notify('You cancelled processing small coke brick!')
-                                                end)
-                                            else
-                                                TriggerServerEvent('jp-drugs:server:removedrugs', Config.CokeItem, Config.SmallPackageAmount)
-                                            end
-                                        end, math.random(6, 8), 20)
-                                    else
-                                        QBCore.Functions.Notify('You need atleast ' .. Config.SmallPackageAmount .. ' Coke Baggies!')
-                                    end
-                                end
-                            },
-                            {
-                                title = 'Coke Brick',
-                                description = 'Coke Baggies Required: ' .. Config.BigPackageAmount,
-                                onSelect = function()
-                                    if QBCore.Functions.HasItem(Config.CokeItem, Config.BigPackageAmount) then
-                                        TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 10000, false)
-                                        exports['ps-ui']:Circle(function(success)
-                                            if success then
-                                                QBCore.Functions.Progressbar('packaging_brick', 'Packaging Coke Brick..', 45000, false, true, {
-                                                    disableMovement = true,
-                                                    disableCarMovement = true,
-                                                    disableMouse = false,
-                                                    disableCombat = true
-                                                    }, {}, {}, {}, function()
-                                                        TriggerServerEvent('jp-drugs:server:givebrick', Config.CokeItem, Config.BigBrick, Config.BigPackageAmount)
-                                                        ClearPedTasksImmediately(PlayerPedId())
-                                                    end, function()
-                                                        ClearPedTasksImmediately(PlayerPedId())
-                                                        QBCore.Functions.Notify('You cancelled processing small coke brick!')
-                                                end)
-                                            else
-                                                TriggerServerEvent('jp-drugs:server:removedrugs', Config.CokeItem, Config.SmallPackageAmount)
-                                            end
-                                        end, math.random(7, 10), 20)
-                                    else
-                                        QBCore.Functions.Notify('You need atleast ' .. Config.BigPackageAmount .. ' Coke Baggies!')
-                                    end
-                                end
-                            },
-                        }
-                    })
-                    lib.showContext('coke_packaging')
+                    if QBCore.Functions.HasItem(Config.MethTrayItem) then
+                        TaskStartScenarioInPlace(PlayerPedId(), "WORLD_HUMAN_HAMMERING", 15000, false)
+                        exports['ps-ui']:Circle(function(success)
+                            if success then
+                                TriggerServerEvent('jc-drugs:server:methprocession', 'cracking')
+                                ClearPedTasksImmediately(PlayerPedId())
+                            else
+                                QBCore.Functions.Notify('You failed at mixing the ingredients!', 'error', 3000)
+                                TriggerServerEvent('jc-drugs:server:methprocession', 'failedcracking')
+                                ClearPedTasksImmediately(PlayerPedId())
+                            end
+                        end, math.random(4, 8), 20)
+                    else
+                        QBCore.Functions.Notify('You need a methtray to crack meth!', 'error', 3000)
+                    end
                 end
             }
-        }
+        },
+        distance = 2.5
     })
 
-    exports['qb-target']:AddTargetModel(extractGasoline, {
-        options = {
-            {
-                label = 'Extract Gasoline',
-                icon = 'fas fa-acid',
-                targeticon = 'fas fa-eye',
-                type = 'client',
-                event = 'jc-drugs:client:extractGasoline'
-            }
-        }
-    })
+    local cardboard_box = "prop_boxpile_07d"
 
-    local CementModel = "prop_cons_cements01"
-    exports['qb-target']:AddTargetModel(CementModel, {
+    exports['qb-target']:AddTargetModel(cardboard_box, {
         options = {
             {
-                label = 'Extract Cement',
-                icon = 'fas fa-cement',
+                label = 'Search Boxes',
+                icon = 'fas fa-box',
                 targeticon = 'fas fa-eye',
                 type = 'client',
-                event = 'jc-drugs:client:extractCement'
-            }
-        }
-    })
-
-    local benzocaineModel = 'prop_air_cargo_01b'
-    exports['qb-target']:AddTargetModel(benzocaineModel, {
-        options = {
-            {
-                label = 'Extract Cement',
-                icon = 'fas fa-cement',
-                targeticon = 'fas fa-eye',
-                type = 'client',
-                event = 'jc-drugs:client:searchBenzocaine'
+                event = 'jc-drugs:client:searchcardboard'
             }
         }
     })

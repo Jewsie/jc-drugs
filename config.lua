@@ -129,6 +129,13 @@ Config.CokeProcessIngredients = { -- Ingredients used for coke processing
         amount = 2
     }
 }
+
+Config.BenzocaineItems = { -- What you can get from the boxes you also get benzocaine, if you only want people to find acetone, just only add Benzocaine!
+    'benzocaine',
+    'copper',
+    'aluminum',
+    'iron',
+}
 ------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------[[METH CONFIGURATION]]-----------------------------------------------------------------
     Config.ExtractItem = 'empty_jerry_can' -- The item used to extract both Methylamine and Hydrochloric Acid
@@ -175,8 +182,15 @@ Config.CokeProcessIngredients = { -- Ingredients used for coke processing
     }
 
     Config.Trowel = 'trowel' -- Item used for gathering Lithium!
-    Config.LithiumItems = { -- ** NOT YET IN USE ** Which items can be archieved from picking up lithium rocks(So it's not always only lithium if you want it to only be lithium remove everything but lithium)
+    Config.LithiumItems = { -- Items which can be archieved from picking up lithium rocks(So it's not always only lithium if you want it to only be lithium remove everything but lithium)
         'lithium',
+        'copper',
+        'aluminum',
+        'iron',
+    }
+
+    Config.AcetoneItems = { -- What you can get from the boxes you also get acetone, if you only want people to find acetone, just only add Acetone!
+        'acetone',
         'copper',
         'aluminum',
         'iron',

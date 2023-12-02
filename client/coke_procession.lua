@@ -2,11 +2,12 @@ local QBCore = exports['qb-core']:GetCoreObject()
 
 local extractedGasoline = {}
 local extractedCement = {}
+local searchBenzocaine = {}
 
 local hasSearched = false
 
-RegisterNetEvent('gs-drugs:client:extractGasoline')
-AddEventHandler('gs-drugs:client:extractGasoline', function(data)
+RegisterNetEvent('jc-drugs:client:extractGasoline')
+AddEventHandler('jc-drugs:client:extractGasoline', function(data)
     local gasolineKey = tostring(data.entity)
     local playerPed = PlayerPedId()
     local amount = Config.GasolineAmount
@@ -49,8 +50,42 @@ AddEventHandler('gs-drugs:client:extractGasoline', function(data)
     end
 end)
 
-RegisterNetEvent('gs-drugs:client:extractCement')
-AddEventHandler('gs-drugs:client:extractCement', function(data)
+RegisterNetEvent('jc-drugs:client:searchBenzocaine')
+AddEventHandler('jc-drugs:client:searchBenzocaine', function(data)
+    local benzocaineKey = tostring(data.entity)
+    local playerPed = PlayerPedId()
+    local amount = Config.GasolineAmount
+
+    if not searchBenzocaine[benzocaineKey] then
+        searchBenzocaine[benzocaineKey] = { hasSearched = false }
+    end
+
+    if searchBenzocaine[benzocaineKey].hasSearched then
+        QBCore.Functions.Notify('You have already searched this box!')
+    else
+        TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 15000, false)
+        QBCore.Functions.Progressbar('extracting_gasoline', 'Searching airport boxes...', 15000, false, true, {
+            disableMovement = true,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = true
+            }, {}, {}, {}, function()
+                TriggerServerEvent('jp-drugs:server:givegasoline', amount)
+                ClearPedTasksImmediately(PlayerPedId())
+                searchBenzocaine[benzocaineKey].hasSearched = true
+
+                Wait(1800 * 1000)
+                searchBenzocaine[benzocaineKey].hasSearched = false
+                end
+            end, function()
+                QBCore.Functions.Notify('You cancelled searching the airport box!')
+                ClearPedTasksImmediately(PlayerPedId())
+        end)
+    end
+end)
+
+RegisterNetEvent('jc-drugs:client:extractCement')
+AddEventHandler('jc-drugs:client:extractCement', function(data)
     local cementKey = tostring(data.entity)
     local playerPed = PlayerPedId()
     local amount = Config.CementExtractAmount
@@ -278,7 +313,7 @@ Citizen.CreateThread(function()
                 icon = 'fas fa-acid',
                 targeticon = 'fas fa-eye',
                 type = 'client',
-                event = 'gs-drugs:client:extractGasoline'
+                event = 'jc-drugs:client:extractGasoline'
             }
         }
     })
@@ -291,7 +326,20 @@ Citizen.CreateThread(function()
                 icon = 'fas fa-cement',
                 targeticon = 'fas fa-eye',
                 type = 'client',
-                event = 'gs-drugs:client:extractCement'
+                event = 'jc-drugs:client:extractCement'
+            }
+        }
+    })
+
+    local benzocaineModel = 'prop_air_cargo_01b'
+    exports['qb-target']:AddTargetModel(benzocaineModel, {
+        options = {
+            {
+                label = 'Extract Cement',
+                icon = 'fas fa-cement',
+                targeticon = 'fas fa-eye',
+                type = 'client',
+                event = 'jc-drugs:client:searchBenzocaine'
             }
         }
     })

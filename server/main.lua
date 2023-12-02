@@ -158,13 +158,24 @@ RegisterServerEvent('jp-drugs:server:givelithium')
 AddEventHandler('jp-drugs:server:givelithium', function(amount)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
+    local chance = math.random(1, 100)
 
-    Player.Functions.AddItem('lithium', amount)
-    TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items['lithium'], 'add')
+    local item1 = Config.LithiumItems[math.random(1, #Config.LithiumItems)]
+    local item2 = Config.LithiumItems[math.random(1, #Config.LithiumItems)]
+    
+    if chance <= 50 then
+        Player.Functions.AddItem(item1, math.random(1, 3))
+        Player.Functions.AddItem(item2, math.random(1, 3))
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item1], 'add')
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item2], 'add')
+    else
+        Player.Functions.AddItem(item1, math.random(1, 2))
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item1], 'add')
+    end
 end)
 
-RegisterServerEvent('gs-drugs:server:methprocession')
-AddEventHandler('gs-drugs:server:methprocession', function(action)
+RegisterServerEvent('jc-drugs:server:methprocession')
+AddEventHandler('jc-drugs:server:methprocession', function(action)
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
 
@@ -244,5 +255,25 @@ AddEventHandler('gs-drugs:server:methprocession', function(action)
             Player.Functions.RemoveItem(Config.MethTrayItem, 1)
             TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[Config.MethTrayItem], 'remove')
         end
+    end
+end)
+
+RegisterServerEvent('jc-drugs:server:givecardboarditem')
+AddEventHandler('jc-drugs:server:givecardboarditem', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local chance = math.random(1, 100)
+
+    local item1 = Config.AcetoneItems[math.random(1, #Config.AcetoneItems)]
+    local item2 = Config.AcetoneItems[math.random(1, #Config.AcetoneItems)]
+    
+    if chance <= 50 then
+        Player.Functions.AddItem(item1, math.random(1, 3))
+        Player.Functions.AddItem(item2, math.random(1, 3))
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item1], 'add')
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item2], 'add')
+    else
+        Player.Functions.AddItem(item1, math.random(1, 2))
+        TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[item1], 'add')
     end
 end)

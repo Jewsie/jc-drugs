@@ -76,13 +76,14 @@ AddEventHandler('jc-drugs:client:searchBenzocaine', function(data)
 
                 Wait(1800 * 1000)
                 searchBenzocaine[benzocaineKey].hasSearched = false
-                end
-            end, function()
+            end,
+            function()
                 QBCore.Functions.Notify('You cancelled searching the airport box!')
                 ClearPedTasksImmediately(PlayerPedId())
         end)
     end
 end)
+
 
 RegisterNetEvent('jc-drugs:client:extractCement')
 AddEventHandler('jc-drugs:client:extractCement', function(data)

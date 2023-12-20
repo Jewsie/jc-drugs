@@ -2,7 +2,7 @@ local QBCore = exports['qb-core']:GetCoreObject()
 
 for _, s in pairs(Config.Seeds) do
     QBCore.Functions.CreateUseableItem(s.item, function(source, item)
-        TriggerClientEvent('jc-drugs:client:plantweeds', source, s.item, s.name, s.reward, s.time, s.stageInterval, s.lowQualityReward, s.midQualityReward, s.highQualityReward)
+        TriggerClientEvent('jc-drugs:client:plantweed', source, s.item, s.name, s.reward, s.time, s.stageInterval, s.lowQualityReward, s.midQualityReward, s.highQualityReward)
     end)
 end
 

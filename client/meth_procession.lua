@@ -33,7 +33,7 @@ AddEventHandler('jc-drugs:client:extractAcid', function(data)
                         QBCore.Functions.Notify('You spilled too much acid!', 'error', 3000)
                         extractedAcid[acidKey].hasSearched = true
                     elseif chance > 30 then
-                        TriggerServerEvent('jp-drugs:server:giveacid', amount)
+                        TriggerServerEvent('jc-drugs:server:giveacid', amount)
                         ClearPedTasksImmediately(PlayerPedId())
                         extractedAcid[acidKey].hasSearched = true
 
@@ -77,7 +77,7 @@ AddEventHandler('jc-drugs:client:extractMethylamine', function(data)
                         QBCore.Functions.Notify('You spilled too much methylamine!', 'error', 3000)
                         extractedMethylamine[acidKey].hasSearched = true
                     elseif chance > 30 then
-                        TriggerServerEvent('jp-drugs:server:givemethylamine', amount)
+                        TriggerServerEvent('jc-drugs:server:givemethylamine', amount)
                         ClearPedTasksImmediately(PlayerPedId())
                         extractedMethylamine[acidKey].hasSearched = true
 
@@ -186,7 +186,7 @@ Citizen.CreateThread(function()
                                 }, {}, {}, {}, function()
                                     if chance <= Config.LithiumChance then
                                         local newPos = GetEntityCoords(lithiumRock)
-                                        TriggerServerEvent('jp-drugs:server:givelithium', math.random(1, Config.LithiumMaxExtract))
+                                        TriggerServerEvent('jc-drugs:server:givelithium', math.random(1, Config.LithiumMaxExtract))
                                         ClearPedTasksImmediately(PlayerPedId())
 
                                         SetEntityVisible(lithiumRock, false)

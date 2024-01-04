@@ -33,7 +33,7 @@ AddEventHandler('jc-drugs:client:extractGasoline', function(data)
                         QBCore.Functions.Notify('You spilled too much gasoline!', 'error', 3000)
                         extractedGasoline[gasolineKey].hasSearched = true
                     elseif chance > 30 then
-                        TriggerServerEvent('jp-drugs:server:givegasoline', amount)
+                        TriggerServerEvent('jc-drugs:server:givegasoline', amount)
                         ClearPedTasksImmediately(PlayerPedId())
                         extractedGasoline[gasolineKey].hasSearched = true
 
@@ -70,7 +70,7 @@ AddEventHandler('jc-drugs:client:searchBenzocaine', function(data)
             disableMouse = false,
             disableCombat = true
             }, {}, {}, {}, function()
-                TriggerServerEvent('jp-drugs:server:givegasoline', amount)
+                TriggerServerEvent('jc-drugs:server:givegasoline', amount)
                 ClearPedTasksImmediately(PlayerPedId())
                 searchBenzocaine[benzocaineKey].hasSearched = true
 
@@ -108,7 +108,7 @@ AddEventHandler('jc-drugs:client:extractCement', function(data)
                 QBCore.Functions.Notify('You didn\'t find any cement!', 'error', 3000)
                 extractedCement[cementKey].hasSearched = true
             elseif chance > 30 then
-                TriggerServerEvent('jp-drugs:server:givecement', amount)
+                TriggerServerEvent('jc-drugs:server:givecement', amount)
                 ClearPedTasksImmediately(PlayerPedId())
                 extractedCement[cementKey].hasSearched = true
 
@@ -155,7 +155,7 @@ Citizen.CreateThread(function()
                                 }, {}, {}, {}, function()
                                     local cokePos = GetEntityCoords(coke)
                                     SetEntityVisible(coke, false)
-                                    TriggerServerEvent('jp-drugs:server:giveCokeLeafs')
+                                    TriggerServerEvent('jc-drugs:server:giveCokeLeafs')
                                     ClearPedTasksImmediately(PlayerPedId())
 
                                     Wait(60 * 1000)
@@ -209,14 +209,14 @@ Citizen.CreateThread(function()
                                     disableMouse = false,
                                     disableCombat = true
                                     }, {}, {}, {}, function()
-                                        TriggerServerEvent('jp-drugs:server:givecoke', Config.CokeProcessIngredients)
+                                        TriggerServerEvent('jc-drugs:server:givecoke', Config.CokeProcessIngredients)
                                         ClearPedTasksImmediately(PlayerPedId())
                                     end, function()
                                         QBCore.Functions.Notify('You have cancelled the coke processing!')
                                         ClearPedTasksImmediately(PlayerPedId())
                                 end)
                             else
-                                TriggerServerEvent('jp-drugs:server:removecokeitems')
+                                TriggerServerEvent('jc-drugs:server:removecokeitems')
                             end
                         end, math.random(4, 7), 20)
                     else
@@ -255,14 +255,14 @@ Citizen.CreateThread(function()
                                                     disableMouse = false,
                                                     disableCombat = true
                                                     }, {}, {}, {}, function()
-                                                        TriggerServerEvent('jp-drugs:server:givebrick', Config.CokeItem, Config.SmallBrick, Config.SmallPackageAmount)
+                                                        TriggerServerEvent('jc-drugs:server:givebrick', Config.CokeItem, Config.SmallBrick, Config.SmallPackageAmount)
                                                         ClearPedTasksImmediately(PlayerPedId())
                                                     end, function()
                                                         ClearPedTasksImmediately(PlayerPedId())
                                                         QBCore.Functions.Notify('You cancelled processing small coke brick!')
                                                 end)
                                             else
-                                                TriggerServerEvent('jp-drugs:server:removedrugs', Config.CokeItem, Config.SmallPackageAmount)
+                                                TriggerServerEvent('jc-drugs:server:removedrugs', Config.CokeItem, Config.SmallPackageAmount)
                                             end
                                         end, math.random(6, 8), 20)
                                     else
@@ -284,14 +284,14 @@ Citizen.CreateThread(function()
                                                     disableMouse = false,
                                                     disableCombat = true
                                                     }, {}, {}, {}, function()
-                                                        TriggerServerEvent('jp-drugs:server:givebrick', Config.CokeItem, Config.BigBrick, Config.BigPackageAmount)
+                                                        TriggerServerEvent('jc-drugs:server:givebrick', Config.CokeItem, Config.BigBrick, Config.BigPackageAmount)
                                                         ClearPedTasksImmediately(PlayerPedId())
                                                     end, function()
                                                         ClearPedTasksImmediately(PlayerPedId())
                                                         QBCore.Functions.Notify('You cancelled processing small coke brick!')
                                                 end)
                                             else
-                                                TriggerServerEvent('jp-drugs:server:removedrugs', Config.CokeItem, Config.SmallPackageAmount)
+                                                TriggerServerEvent('jc-drugs:server:removedrugs', Config.CokeItem, Config.SmallPackageAmount)
                                             end
                                         end, math.random(7, 10), 20)
                                     else

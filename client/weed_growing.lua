@@ -83,10 +83,14 @@ function DecreaseHealthAndThirst(plant)
 end
 
 RegisterNetEvent('jc-drugs:client:plantweed')
-AddEventHandler('jc-drugs:client:plantweed', function(item, name, reward, time, stageInterval, lowQualityReward, midQualityReward, highQualityReward)
+AddEventHandler('jc-drugs:client:plantweed', function(item, name, reward, time, stageInterval, lowQualityReward, midQualityReward, highQualityReward, coords)
     local model = 'bkr_prop_weed_med_01b'
-    local playerPos = GetEntityCoords(PlayerPedId())
+    local coords = coords
     local stageUpgrade = stageInterval
+
+    if not coords then
+        coords = GetEntityCoords(PlayerPedId())
+    end
 
     RequestModel(model)
     while not HasModelLoaded(model) do
@@ -101,7 +105,7 @@ AddEventHandler('jc-drugs:client:plantweed', function(item, name, reward, time, 
     TriggerServerEvent('jc-drugs:server:removeSeed', item)
 
     Wait(5000)
-    local weedPlant = CreateObject(model, playerPos.x, playerPos.y, playerPos.z, true, false, false)
+    local weedPlant = CreateObject(model, coords.x, coords.y, coords.z, true, false, false)
     PlaceObjectOnGroundProperly(weedPlant)
     FreezeEntityPosition(weedPlant, true)
     ClearPedTasksImmediately(PlayerPedId())
@@ -219,7 +223,6 @@ AddEventHandler('jc-drugs:client:plantweed', function(item, name, reward, time, 
             }
         }
     })
-
     DecreaseHealthAndThirst(weedPlant)  -- Start the timer for health and thirst
 
     while true do
@@ -231,16 +234,22 @@ AddEventHandler('jc-drugs:client:plantweed', function(item, name, reward, time, 
                 awayFromObject = false
                 local plantData = plants[weedPlant]
 
-                -- Check if health or thirst has reached 0, and if not, update remainingTime
                 if plantData.health > 0 and plantData.thirst > 0 then
-                    remainingTime = math.floor((plantData.timeWeed - GetGameTimer()) / 1000) -- Convert to seconds
+                    remainingTime = math.floor((plantData.timeWeed - GetGameTimer()) / 1000)
                     Draw3DTextForPlant(weedPlant, plantData, remainingTime)
 
                     if remainingTime <= 0 then
                         if plantData.stage < 3 then
-                            plantData.timeWeed = GetGameTimer() + (plantData.time2 + plantData.stageUpgrade * 1000) -- Reset the time to initialTime
+                            plantData.timeWeed = GetGameTimer() + (plantData.time2 + plantData.stageUpgrade * 1000)
                             plantData.stageUpgrade = plantData.stageUpgrade + stageUpgrade
                             plantData.stage = plantData.stage + 1
+                            coords = GetEntityCoords(weedPlant)
+                            thirst = plantData.thirst
+                            health = plantData.health
+                            quality = plantData.quality
+                            stage = plantData.stage
+                            DeleteObject(weedPlant)
+                            TriggerEvent('jc-drugs:client:plantweed', nil, name, reward, time + stageUpgrade, stageUpgrade, lowQualityReward, midQualityReward, highQualityReward, coords)
                             print(tostring(plantData.stage))
                         elseif plantData.stage == 3 then
                             Draw3DTextFinishedPlant(weedPlant)

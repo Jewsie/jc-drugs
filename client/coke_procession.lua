@@ -54,7 +54,6 @@ RegisterNetEvent('jc-drugs:client:searchBenzocaine')
 AddEventHandler('jc-drugs:client:searchBenzocaine', function(data)
     local benzocaineKey = tostring(data.entity)
     local playerPed = PlayerPedId()
-    local amount = Config.GasolineAmount
 
     if not searchBenzocaine[benzocaineKey] then
         searchBenzocaine[benzocaineKey] = { hasSearched = false }
@@ -70,7 +69,7 @@ AddEventHandler('jc-drugs:client:searchBenzocaine', function(data)
             disableMouse = false,
             disableCombat = true
             }, {}, {}, {}, function()
-                TriggerServerEvent('jc-drugs:server:givegasoline', amount)
+                TriggerServerEvent('jc-drugs:server:givebenzo', amount)
                 ClearPedTasksImmediately(PlayerPedId())
                 searchBenzocaine[benzocaineKey].hasSearched = true
 
@@ -145,7 +144,7 @@ Citizen.CreateThread(function()
                     icon = 'fas fa-plant',
                     targeticon = 'fas fa-eye',
                     action = function()
-                        if QBCore.Functions.HasItem('trowel') then
+                        if QBCore.Functions.HasItem('meth') then
                             TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 10000, false)
                             QBCore.Functions.Progressbar('picking_coke', 'Picking Coke...', 10000, false, true, {
                                 disableMovement = true,
@@ -336,7 +335,7 @@ Citizen.CreateThread(function()
     exports['qb-target']:AddTargetModel(benzocaineModel, {
         options = {
             {
-                label = 'Extract Cement',
+                label = 'Search Box',
                 icon = 'fas fa-cement',
                 targeticon = 'fas fa-eye',
                 type = 'client',

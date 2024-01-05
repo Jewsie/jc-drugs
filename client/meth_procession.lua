@@ -4,7 +4,7 @@ local extractedAcid = {}
 local extractedMethylamine = {}
 local searchedBox = {}
 local pickedLithium = {}
-local hasSearched = false
+local hasSearched = falses
 
 RegisterNetEvent('jc-drugs:client:extractAcid')
 AddEventHandler('jc-drugs:client:extractAcid', function(data)

@@ -63,7 +63,7 @@ AddEventHandler('jc-drugs:client:searchBenzocaine', function(data)
         QBCore.Functions.Notify('You have already searched this box!')
     else
         TaskStartScenarioInPlace(PlayerPedId(), "PROP_HUMAN_PARKING_METER", 15000, false)
-        QBCore.Functions.Progressbar('extracting_gasoline', 'Searching airport boxes...', 15000, false, true, {
+        QBCore.Functions.Progressbar('searching_boxes', 'Searching airport boxes...', 15000, false, true, {
             disableMovement = true,
             disableCarMovement = true,
             disableMouse = false,

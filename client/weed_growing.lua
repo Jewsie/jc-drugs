@@ -101,10 +101,13 @@ AddEventHandler('jc-drugs:client:plantweed', function(item, name, reward, time, 
     local time2 = time
     local timeWeed = GetGameTimer() + (time2 * 1000)
 
-    TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 5000, false)
-    TriggerServerEvent('jc-drugs:server:removeSeed', item)
+    if stage == 0 then
+        TaskStartScenarioInPlace(PlayerPedId(), "world_human_gardener_plant", 5000, false)
+        TriggerServerEvent('jc-drugs:server:removeSeed', item)
 
-    Wait(5000)
+        Wait(5000)
+    end
+    
     local weedPlant = CreateObject(model, coords.x, coords.y, coords.z, true, false, false)
     PlaceObjectOnGroundProperly(weedPlant)
     FreezeEntityPosition(weedPlant, true)
